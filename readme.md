@@ -2,9 +2,9 @@
 
 #### Актуальные цены на автомобили разных марок и моделей
 
-⋅⋅* Laravel
-⋅⋅* Angular
-⋅⋅* Chart.js
-⋅⋅* Bootstrap
++ Laravel
++ Angular
++ Chart.js
++ Bootstrap
 
 
