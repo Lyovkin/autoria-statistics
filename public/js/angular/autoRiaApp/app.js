@@ -17,7 +17,7 @@ app.controller('autoRiaCtrl', function($scope, $http) {
     $scope.ObjMarks = [];
     $scope.ObjModels = [];
 
-    $scope.result = null;
+    $scope.year = null;
 
     /**
      * Get categories
@@ -118,16 +118,27 @@ app.controller('autoRiaCtrl', function($scope, $http) {
         }
     });
 
-    $scope.$watch('ObjModels', function() {
-       if($scope.ObjModels != null) {
+    const allAuto = 'Всего машин';
+    const mean = 'Средняя цена';
+    const interQuantile = 'Средний квантиль*';
+
+    $scope.$watch('year', function() {
+       if($scope.year != null) {
            $http.get('http://api.auto.ria.com/average?main_category='+ $scope.IdType +'&'+
-           +'body_id='+ $scope.IdBody +'&marka_id='+ $scope.IdMarks +'&model_id='+ $scope.IdModels +'')
+           +'body_id='+ $scope.IdBody +'&marka_id='+ $scope.IdMarks +'&model_id='+ $scope.IdModels +'&yers='+ $scope.year +'')
                .then(function(response) {
                    $scope.result = response.data;
+                   $scope.labels = [allAuto, mean, interQuantile];
+                   $scope.data = [$scope.result.total, $scope.result.arithmeticMean, $scope.result.interQuartileMean];
+                   if($scope.nonAuto != "") {
+                       $scope.nonAuto = "";
+                       if($scope.result.total === 0) {
+                           $scope.nonAuto = 'Нет автомобилей по Вашему запросу';
+                       }
+                   }
+
                });
        }
     }, true);
-
-
 
 });
